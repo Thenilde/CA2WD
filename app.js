@@ -2,8 +2,11 @@ const express=require('express') //created the express packet
 const app=express();//executed code
 const mongoose=require('mongoose')//Code that is going to connect db
 const bodyParser=require('body-parser');
+const cors=require('cors');
 require('dotenv/config');
 
+//Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 //Import Routes

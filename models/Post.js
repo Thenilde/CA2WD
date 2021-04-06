@@ -1,28 +1,28 @@
 const mongoose =require('mongoose');
 const PostSchema= mongoose.Schema({
 
-    instrument:{
+    Instrument:{
         type:String,
         require:true,
     },
     
-    price:{
+    Price:{
         type:String,
         require:true,
     },
 
-    color:{
+    Color:{
         type:String,
         require:true,
     },
 
-    year:{
+    Year:{
         type:String,
         require:true,
 
     },
 
-    comments:{
+    Comments:{
         type:String,
         require:true,
     },

@@ -2,30 +2,80 @@ const express=require('express');
 const router=express.Router();
 const Post=require('../models/Post');
 
-router.get('/',(req,res)=>{
-    res.send('we are on posts');
+
+//GET BACK ALL THE POSTS
+router.get('/', async (req,res)=>{
+    try{
+        const posts=await Post.find();
+        res.json(posts);
+    }catch(err){
+        res.json({ message:err});
+
+    }
+  
 
 });
-
-router.post('/', (req ,res)=> {
+ 
+ //SUBMITS A POST
+router.post('/', async (req ,res)=> {
   const post= new Post({
 
-      intrument:req.body.instrument,
-      price:req.body.price,
-      color:req.body.color,
-      year:req.body.year,
-      comments:req.body.comments
+      Instrument:req.body.Instrument,
+      Price:req.body.Price,
+      Color:req.body.Color,
+      Year:req.body.Year,
+      Comments:req.body.Comments
   });
 
-  post.save()
-      .then(data =>{
-          res.json(data);
-      })
+   try{
+       const savedPost=await post.save();
+       res.json(savedPost);
 
-      .catch(err=>{
-          res.json({message:err});
-      });
+   }catch(err){
+       res.json({message:err});
+   }
 });
 
+ ///SPECIFIC POST
+
+  router.get('/:postId', async (req ,res)=>{
+     try{
+         const post=await Post.findById(req.params.postId);
+         res.json(post);
+
+     }catch(err){
+         res.json({message: err});
+     }
+  });
+
+  // Delete Post
+
+  router.delete('/:postId', async (req ,res)=>{
+     try{
+         const removedPost=await Post.remove({_id: req.params.postId});
+         res.json(removedPost);
+
+     }catch(err){
+         res.json({message: err});
+     }
+  });
+
+
+  // Update Post
+
+  router.patch('/:postId', async (req ,res)=>{
+     try{
+         const updatedPost=await Post.updateOne(
+             {_id: req.params.postId},
+             {$set: {Instrument: req.body.Instrument,
+              Price:req.body.Price}}
+              
+             );
+         res.json(updatedPost);
+
+     }catch(err){
+         res.json({message: err});
+     }
+  });
 
 module.exports=router;
