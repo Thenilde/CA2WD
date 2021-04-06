@@ -1,13 +1,15 @@
 const express=require('express') //created the express packet
 const app=express();//executed code
 const mongoose=require('mongoose')//Code that is going to connect db
+const bodyParser=require('body-parser');
+require('dotenv/config');
 
-//Middlewares to expecific when routes weill be heats.
+app.use(bodyParser.json());
 
-app.use('/posts',()=> {
-    console.log('This is a middleware running');
-});
+//Import Routes
+const postsRoute=require('./routes/posts');
 
+app.use('/posts',postsRoute);
 
 
 //Routes
@@ -16,13 +18,11 @@ app.get('/',(req,resp)=>{
     resp.send('We are on home');
 });
 
-app.get('/posts',(req,resp)=>{
-    resp.send('We are on posts');
-});
 
 //Connect to DB
 
-mongoose.connect('mongodb+srv://Music:123@cluster0.vkjg1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(
+process.env.DB_CONNECTION,
 {useNewUrlParser:true },
 ()=> console.log('connected to DB Borges!')
 );
