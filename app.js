@@ -17,8 +17,8 @@ app.use('/posts',postsRoute);
 
 //Routes
 
-app.get('/',(req,resp)=>{
-    resp.send('We are on home');
+app.get('/',(req,res)=>{
+    res.send('We are on home');
 });
 
 
@@ -27,7 +27,7 @@ app.get('/',(req,resp)=>{
 mongoose.connect(
 process.env.DB_CONNECTION,
 {useNewUrlParser:true },
-()=> console.log('connected to DB Borges!')
+()=> console.log('connected to DB  T Borges!')
 );
 
 //Port name to listening to the server
